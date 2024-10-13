@@ -1,0 +1,69 @@
+body{
+    background-color: rgb(44, 44, 44);
+}
+
+.outerContainer{
+    padding: 1em;
+    overflow: hidden;
+}
+
+.innerContainer{
+    width: 100%;
+}
+
+.appContainer{
+    display: flexbox;
+    margin: 0 auto;
+    width: 85%;
+    padding: 1em;
+    border: 3px solid black;
+    border-radius: 1em;
+    height: 75vh;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 3px 3px 3px black;
+}
+
+.appHeader{
+    text-align: center;
+    border-bottom: 2px solid black;
+    margin: 0;
+}
+
+.appBodyOuter{
+    display: grid;
+    grid-template-columns: 3 / 1fr;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.appBodyInner{
+    display: flex;
+    width: 100%;
+}
+
+.itemList{
+    list-style: none;
+    margin: 0 2em;
+    font-size: larger;
+    text-align: center;
+}
+
+.listItem{
+    margin: 1em;
+    font-size: 1.2em;
+}
+
+.userInputOuter{
+    border-top: 1px solid black;
+}
+
+.uiHeader{
+    font-size: 2em;
+}
+
+#userInput{
+    margin-left: 5em;
+    font-size: 2em;
+}
