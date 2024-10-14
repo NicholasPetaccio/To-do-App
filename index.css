@@ -11,6 +11,11 @@ body{
     width: 100%;
 }
 
+.appHeader{
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
 .appContainer{
     display: flexbox;
     margin: 0 auto;
@@ -24,36 +29,64 @@ body{
     box-shadow: 3px 3px 3px black;
 }
 
-.appHeader{
-    text-align: center;
-    border-bottom: 2px solid black;
-    margin: 0;
-}
-
 .appBodyOuter{
-    display: grid;
-    grid-template-columns: 3 / 1fr;
-    gap: 20px;
     width: 100%;
     justify-content: space-evenly;
 }
 
 .appBodyInner{
-    display: flex;
     width: 100%;
-    height: 45vh;
+    
 }
 
 .itemList{
     list-style: none;
-    margin: 0 2em;
     font-size: larger;
+    text-align: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3/1fr);
+}
+
+.toDoContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
     text-align: center;
 }
 
+.toDoContainer:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.form{
+    clear: both;
+}
+
 .listItem{
-    margin: 1em;
-    font-size: 1.2em;
+    font-size: 2em;
+    margin: 0;
+    width: 85%;
+}
+
+.checkbox{
+    margin: 1px;
+}
+
+.delete{
+    margin-left: 2em;
+    width: 3em;
+    justify-content: flex-end;
+}
+
+input[type=checkbox] {
+    width: 30px;
+    height: 30px;
+}
+
+input[type=text] {
+    
 }
 
 .userInputOuter{
@@ -65,9 +98,8 @@ body{
 }
 
 #userInput{
-    margin-right: 0;
-    margin-left: 4em;
     font-size: 2em;
+    margin-top: 5em;
 }
 
 #userButton{
@@ -75,4 +107,8 @@ body{
     background-color: green;
     color: white;
     margin: 0;
+}
+
+.list{
+    font-size: 2em;
 }
