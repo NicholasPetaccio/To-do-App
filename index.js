@@ -8,17 +8,26 @@ const renderTodos = () => {
     toDoList.innerHTML = ''; // Clear current list
 
     toDos.forEach((toDo, index) => {
-        const toDoItem = document.createElement('li');
+        const itemContainer = document.createElement('div');
+        itemContainer.classList.add('toDoContainer');
+
+        const checkbox = document.createElement('input')
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.classList.add('checkbox')
+        const toDoItem = document.createElement('p');
+        toDoItem.classList.add('listItem');
         toDoItem.textContent = toDo;
 
         // Add a delete button
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Del';
+        deleteButton.textContent = 'D';
         deleteButton.classList.add('delete');
         deleteButton.onclick = () => deleteToDo(index);
 
-        toDoItem.appendChild(deleteButton);
-        toDoList.appendChild(toDoItem);
+        toDoList.appendChild(itemContainer);
+        itemContainer.appendChild(checkbox);
+        itemContainer.appendChild(toDoItem);
+        itemContainer.appendChild(deleteButton);
     });
 };
 
