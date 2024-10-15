@@ -1,62 +1,56 @@
 // Check for existing to-do items from local storage or start fresh
 let toDos = JSON.parse(localStorage.getItem('todos') || '[]');
 
+// Helper function to generate a unique ID
+const generateID = () => `todo-${Date.now()}-${Math.random().toString(36)}`;
+
 // Render toDoList
 const renderTodos = () => {
-    console.log("Rendering todos...", toDos); // Debugging log
     const toDoList = document.getElementById('toDoList');
     toDoList.innerHTML = ''; // Clear current list
 
-    toDos.forEach((toDo, index) => {
+    toDos.forEach((toDo) => {
         const itemContainer = document.createElement('div');
         const buttonContainer = document.createElement('div');
         buttonContainer.classList.add('buttonContainer');
         itemContainer.classList.add('toDoContainer');
 
+        // Create checkbox for completion
         const checkbox = document.createElement('input');
-        checkbox.setAttribute('type', 'checkbox');
+        checkbox.type = 'checkbox';
         checkbox.classList.add('checkbox');
-        checkbox.id = `checkbox${index}`;
+        checkbox.checked = toDo.completed;
+        checkbox.onclick = () => toggleCompletion(toDo.id);
 
-        checkbox.checked = localStorage.getItem(`checkbox${index}`) === 'true';
-        checkbox.onclick = () => {
-            localStorage.setItem(`checkbox${index}`, checkbox.checked);
-            saveLocalStorage();
-        }
-
+        // Create the to-do item element
         const toDoItem = document.createElement('p');
         toDoItem.classList.add('listItem');
-        toDoItem.textContent = toDo;
+        toDoItem.textContent = toDo.text;
 
+        // Edit input box (hidden initially)
         const editInputBox = document.createElement('input');
-        editInputBox.setAttribute('type', 'text');
+        editInputBox.type = 'text';
         editInputBox.classList.add('editBox');
-        editInputBox.value = toDo; 
-        editInputBox.style.display = 'none'; 
+        editInputBox.value = toDo.text;
+        editInputBox.style.display = 'none';
 
         // Add a delete button
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'D';
         deleteButton.classList.add('delete');
-        deleteButton.onclick = () => {
-            deleteToDo(index);
-            localStorage.removeItem(index);
-            localStorage.removeItem(`checkbox${index}`);
-            localStorage.setItem(`checkbox${index}`);
-            saveLocalStorage();
-        }
+        deleteButton.onclick = () => deleteToDo(toDo.id);
 
         // Add an edit button
         const editButton = document.createElement('button');
         editButton.textContent = 'E';
         editButton.classList.add('edit');
-        editButton.onclick = () => editToDo(index, toDoItem, editInputBox);
+        editButton.onclick = () => editToDo(toDo.id, toDoItem, editInputBox);
 
-        // Append children to containers
+        // Append elements to the item container
         toDoList.appendChild(itemContainer);
         itemContainer.appendChild(checkbox);
         itemContainer.appendChild(toDoItem);
-        itemContainer.appendChild(editInputBox); // Append input box
+        itemContainer.appendChild(editInputBox);
         itemContainer.appendChild(buttonContainer);
         buttonContainer.appendChild(editButton);
         buttonContainer.appendChild(deleteButton);
@@ -65,9 +59,17 @@ const renderTodos = () => {
 
 // Save todos to local storage
 const saveLocalStorage = () => {
-    console.log("Saving to local storage", toDos); // Debugging log
     localStorage.setItem('todos', JSON.stringify(toDos));
-    
+};
+
+// Toggle completion status
+const toggleCompletion = (id) => {
+    const todo = toDos.find((todo) => todo.id === id);
+    if (todo) {
+        todo.completed = !todo.completed;
+        saveLocalStorage();
+        renderTodos();
+    }
 };
 
 // Add new item to to-do list
@@ -77,39 +79,41 @@ document.getElementById('form').addEventListener('submit', (e) => {
     const addItem = userInput.value.trim();
 
     if (addItem) {
-        toDos.push(addItem);
+        const newToDo = { id: generateID(), text: addItem, completed: false };
+        toDos.push(newToDo);
         userInput.value = ''; // Clear input after adding
         saveLocalStorage();
-        renderTodos(); // Call render after adding new item
+        renderTodos();
     }
 });
 
 // Edit a to-do item
-const editToDo = (index, toDoItem, editInputBox) => {
+const editToDo = (id, toDoItem, editInputBox) => {
     toDoItem.style.display = 'none';
-    editInputBox.style.display = 'block'; 
+    editInputBox.style.display = 'block';
     editInputBox.focus();
 
-    // Listen for Enter key to save the edit
     editInputBox.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const newValue = editInputBox.value.trim();
-            if (newValue) {
-                toDos[index] = newValue; 
+            const todo = toDos.find((todo) => todo.id === id);
+            if (todo && newValue) {
+                todo.text = newValue;
                 saveLocalStorage();
-                renderTodos(); 
+                renderTodos();
             }
         }
     });
 };
 
 // Delete a to-do item
-const deleteToDo = (index) => {
-    toDos.splice(index, 1);
+const deleteToDo = (id) => {
+    toDos = toDos.filter((todo) => todo.id !== id);
     saveLocalStorage();
     renderTodos();
 };
 
 // Initial render on page load
 document.addEventListener('DOMContentLoaded', renderTodos);
+
 
