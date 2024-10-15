@@ -41,6 +41,23 @@ body{
     height: 100%;
 }
 
+.headers{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    font-size: larger;
+    background-color: lightgray;
+}
+
+.buttonHeadersContainer{
+    display: flex;
+    
+}
+
+.endButtons{
+    margin: 1em;
+}
+
 .itemList{
     font-size: larger;
     text-align: center;
@@ -107,8 +124,7 @@ input[type=checkbox] {
 }
 
 .userInputInner{
-    margin-top: 5em;
-    margin-bottom: 5em;
+    margin-top: 2em;
 }
 
 .uiHeader{
