@@ -16,6 +16,13 @@ const renderTodos = () => {
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.classList.add('checkbox');
+        checkbox.id = `checkbox${index}`;
+
+        checkbox.checked = localStorage.getItem(`checkbox${index}`) === 'true';
+        checkbox.onclick = () => {
+            localStorage.setItem(`checkbox${index}`, checkbox.checked);
+            saveLocalStorage();
+        }
 
         const toDoItem = document.createElement('p');
         toDoItem.classList.add('listItem');
@@ -24,14 +31,20 @@ const renderTodos = () => {
         const editInputBox = document.createElement('input');
         editInputBox.setAttribute('type', 'text');
         editInputBox.classList.add('editBox');
-        editInputBox.value = toDo; // Set initial value to the current to-do
-        editInputBox.style.display = 'none'; // Hide initially
+        editInputBox.value = toDo; 
+        editInputBox.style.display = 'none'; 
 
         // Add a delete button
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'D';
+        deleteButton.innerHTML = 'D';
         deleteButton.classList.add('delete');
-        deleteButton.onclick = () => deleteToDo(index);
+        deleteButton.onclick = () => {
+            deleteToDo(index);
+            localStorage.removeItem(index);
+            localStorage.removeItem(`checkbox${index}`);
+            localStorage.setItem(`checkbox${index}`);
+            saveLocalStorage();
+        }
 
         // Add an edit button
         const editButton = document.createElement('button');
@@ -54,6 +67,7 @@ const renderTodos = () => {
 const saveLocalStorage = () => {
     console.log("Saving to local storage", toDos); // Debugging log
     localStorage.setItem('todos', JSON.stringify(toDos));
+    
 };
 
 // Add new item to to-do list
@@ -72,18 +86,18 @@ document.getElementById('form').addEventListener('submit', (e) => {
 
 // Edit a to-do item
 const editToDo = (index, toDoItem, editInputBox) => {
-    toDoItem.style.display = 'none'; // Hide the current text
-    editInputBox.style.display = 'block'; // Show the input box
-    editInputBox.focus(); // Focus on the input box
+    toDoItem.style.display = 'none';
+    editInputBox.style.display = 'block'; 
+    editInputBox.focus();
 
     // Listen for Enter key to save the edit
     editInputBox.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const newValue = editInputBox.value.trim();
             if (newValue) {
-                toDos[index] = newValue; // Update the to-do item
+                toDos[index] = newValue; 
                 saveLocalStorage();
-                renderTodos(); // Re-render the list with updated text
+                renderTodos(); 
             }
         }
     });
@@ -98,5 +112,4 @@ const deleteToDo = (index) => {
 
 // Initial render on page load
 document.addEventListener('DOMContentLoaded', renderTodos);
-
 
