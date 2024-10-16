@@ -14,6 +14,7 @@ const renderTodos = () => {
         const buttonContainer = document.createElement('div');
         buttonContainer.classList.add('buttonContainer');
         itemContainer.classList.add('toDoContainer');
+        
 
         // Create checkbox for completion
         const checkbox = document.createElement('input');
@@ -26,6 +27,7 @@ const renderTodos = () => {
         const toDoItem = document.createElement('p');
         toDoItem.classList.add('listItem');
         toDoItem.textContent = toDo.text;
+        toDoItem.onclick = () => toggleCompletion(toDo.id);
 
         // Edit input box (hidden initially)
         const editInputBox = document.createElement('input');
@@ -36,13 +38,13 @@ const renderTodos = () => {
 
         // Add a delete button
         const deleteButton = document.createElement('button');
-        deleteButton.innerHTML = 'D';
+        deleteButton.innerHTML = '<img id="deleteImage" src="assets/trash-svgrepo-com.png" >';
         deleteButton.classList.add('delete');
         deleteButton.onclick = () => deleteToDo(toDo.id);
 
         // Add an edit button
         const editButton = document.createElement('button');
-        editButton.textContent = 'E';
+        editButton.innerHTML = '<img id="deleteImage" src="assets/pencil-svgrepo-com.png" >';
         editButton.classList.add('edit');
         editButton.onclick = () => editToDo(toDo.id, toDoItem, editInputBox);
 
