@@ -54,6 +54,10 @@ body{
     
 }
 
+#completedHeader{
+    margin-left: 1em;
+}
+
 .endButtons{
     margin: 1em;
 }
@@ -86,6 +90,7 @@ body{
 
 .checkbox{
     margin: 1px;
+    background-color: green;
 }
 
 .buttonContainer{
@@ -97,6 +102,11 @@ body{
     margin: 0 auto;
     width: 5em;
     height: 100%;
+}
+
+#deleteImage{
+    width: 3em;
+    height: 3em;
 }
 
 .edit{
@@ -137,4 +147,8 @@ input[type=checkbox] {
 
 .list{
     font-size: 2em;
+}
+
+.completed {
+    background-color: #d0e8f2;
 }
